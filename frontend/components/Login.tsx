@@ -1,9 +1,13 @@
 import { LoginDTO } from '@/types/dto/authDTO'
+import { useRouter } from 'next/navigation'
+
 import React, { useState } from 'react'
 
 type Props = {}
 
 const Login = (props: Props) => {
+
+    const router = useRouter()
 
     const [user, setUser] = useState<LoginDTO>({
         email: '',
@@ -12,7 +16,7 @@ const Login = (props: Props) => {
 
     const LoginHandler = async (e: React.FormEvent) => {
         e.preventDefault()
-
+        router.push('/home')
     }
 
     return (
