@@ -18,7 +18,7 @@ const page = (props: Props) => {
     const [selectDate, setSelectDate] = useState(currentDate);
 
     return (
-        <div className="flex gap-10 sm:divide-x justify-center sm:w-1/2 mx-auto  h-screen items-center sm:flex-row flex-col">
+        <div className="flex gap-10 sm:divide-x justify-center sm:w-1/2 mx-auto h-full items-center sm:flex-row flex-col">
             <div className="w-96 h-96 ">
                 <div className="flex justify-between items-center">
                     <h1 className="select-none font-semibold">
@@ -95,10 +95,9 @@ const page = (props: Props) => {
                 </div>
             </div>
             <div className="h-96 w-96 sm:px-5">
-                <h1 className=" font-semibold">
+                <h1 className="font-semibold">
                     Words transalted on {selectDate.toDate().toDateString()}
                 </h1>
-
             </div>
         </div>
     );

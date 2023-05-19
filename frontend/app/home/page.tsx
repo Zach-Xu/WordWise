@@ -36,25 +36,21 @@ const languageNames: string[] = [
 
 const page = (props: Props) => {
     return (
-        <div className='w-screen h-screen overflow-hidden bg-blue-100'>
-            <section className='h-full flex flex-col justify-center'>
-                <div className='flex flex-col max-w-[700px] mx-auto border-2 bg-white shadow-lg rounded-lg p-4 space-y-4'>
-
-                    <input type="text" className='active:outline-none focus:outline-none p-1 px-2' placeholder='English Word' />
-                    <select name="" id="">
-                        <option value="" disabled selected hidden>Targeted language</option>
-                        {
-                            languageNames.map((name, idx) => (
-                                <option key={idx} value={name}>{name}</option>
-                            ))
-                        }
-                    </select>
-                    <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500'>Translate</button>
-                    <p className='bg-gray-200 p-2 rounded-md'>Transaltion</p>
-                    <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500'>Save the word</button>
-                </div>
-            </section>
-
+        <div className='h-full flex flex-col justify-center'>
+            <div className='flex flex-col max-w-[700px] mx-auto border-2 bg-white shadow-lg rounded-lg p-4 space-y-4'>
+                <input type="text" className='active:outline-none focus:outline-none p-1 px-2' placeholder='English Word' />
+                <select name="" id="">
+                    <option value="" disabled selected hidden>Targeted language</option>
+                    {
+                        languageNames.map((name, idx) => (
+                            <option key={idx} value={name}>{name}</option>
+                        ))
+                    }
+                </select>
+                <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500'>Translate</button>
+                <p className='bg-gray-200 p-2 rounded-md'>Transaltion</p>
+                <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500'>Save the word</button>
+            </div>
         </div>
     )
 }
