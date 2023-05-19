@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
 import { generateDate, months } from "@/utils/calendar";
 import cn from "@/utils/cn";
 import dayjs from "dayjs";
 import React, { useState } from "react";
-
-
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 
-type Props = {}
+type Props = {
+    date: string
+}
 
 const page = (props: Props) => {
 
@@ -96,12 +96,13 @@ const page = (props: Props) => {
             </div>
             <div className="h-96 w-96 sm:px-5">
                 <h1 className=" font-semibold">
-                    Schedule for {selectDate.toDate().toDateString()}
+                    Words transalted on {selectDate.toDate().toDateString()}
                 </h1>
-                <p className="text-gray-400">No meetings for today.</p>
+
             </div>
         </div>
     );
 }
+
 
 export default page
