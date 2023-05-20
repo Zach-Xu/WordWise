@@ -35,6 +35,15 @@ const languageNames: string[] = [
 ];
 
 const page = (props: Props) => {
+
+    const translateWord = async () => {
+        try {
+
+        } catch (error) {
+
+        }
+    }
+
     return (
         <div className='h-full flex flex-col justify-center'>
             <div className='flex flex-col max-w-[700px] mx-auto border-2 bg-white shadow-lg rounded-lg p-4 space-y-4'>
@@ -47,9 +56,8 @@ const page = (props: Props) => {
                         ))
                     }
                 </select>
-                <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500'>Translate</button>
-                <p className='bg-gray-200 p-2 rounded-md'>Transaltion</p>
-                <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500'>Save the word</button>
+                <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500' onClick={translateWord}>Translate</button>
+                <p className='bg-gray-200 p-2 rounded-md'>Translation</p>
             </div>
         </div>
     )

@@ -1,4 +1,4 @@
-﻿namespace backend.Models.Word
+﻿namespace backend.Entity.Word
 {
     public class WordRecord
     {

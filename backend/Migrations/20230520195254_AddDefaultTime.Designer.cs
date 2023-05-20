@@ -11,8 +11,8 @@ using backend.Entity;
 namespace backend.Migrations
 {
     [DbContext(typeof(WordDbContext))]
-    [Migration("20230520015959_initialCreate")]
-    partial class initialCreate
+    [Migration("20230520195254_AddDefaultTime")]
+    partial class AddDefaultTime
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,7 +29,9 @@ namespace backend.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedTime")
-                        .HasColumnType("datetime(6)");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime(6)")
+                        .HasDefaultValue(new DateTime(2023, 5, 20, 15, 52, 53, 976, DateTimeKind.Local).AddTicks(6148));
 
                     b.Property<string>("EnglishWord")
                         .IsRequired()

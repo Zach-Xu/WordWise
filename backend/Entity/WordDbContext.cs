@@ -1,9 +1,9 @@
-﻿using backend.Models.Word;
+﻿using backend.Entity.Word;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Models
+namespace backend.Entity
 {
-    public class WordDbContext:DbContext
+    public class WordDbContext : DbContext
     {
         public DbSet<WordRecord> WordRecords { get; set; }
         public WordDbContext(DbContextOptions<WordDbContext> options) : base(options)
@@ -22,7 +22,7 @@ namespace backend.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfigurationsFromAssembly(this.GetType().Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
         }
     }
 }

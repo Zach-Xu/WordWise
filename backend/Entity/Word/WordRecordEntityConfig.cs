@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace backend.Models.Word
+namespace backend.Entity.Word
 {
     public class WordRecordEntityConfig : IEntityTypeConfiguration<WordRecord>
     {
@@ -9,6 +9,7 @@ namespace backend.Models.Word
         {
             builder.ToTable("T_WordRecord");
             builder.OwnsOne(w => w.Translation);
+            builder.Property(w => w.CreatedTime).HasDefaultValue(DateTime.Now);
         }
     }
 }
