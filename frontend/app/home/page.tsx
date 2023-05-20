@@ -38,9 +38,9 @@ const page = (props: Props) => {
     return (
         <div className='h-full flex flex-col justify-center'>
             <div className='flex flex-col max-w-[700px] mx-auto border-2 bg-white shadow-lg rounded-lg p-4 space-y-4'>
-                <input type="text" className='active:outline-none focus:outline-none p-1 px-2' placeholder='English Word' />
-                <select name="" id="">
-                    <option value="" disabled selected hidden>Targeted language</option>
+                <input type="text" className='active:outline-none focus:outline-none p-1' placeholder='English Word' />
+                <select name="" defaultValue="" className='py-2 focus:outline-none'>
+                    <option value="" disabled hidden>Targeted language</option>
                     {
                         languageNames.map((name, idx) => (
                             <option key={idx} value={name}>{name}</option>

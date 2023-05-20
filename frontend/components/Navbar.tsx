@@ -1,14 +1,18 @@
 'use client';
 
 import Link from 'next/link';
-import React from 'react'
+import React, { useState } from 'react'
 
 type Props = {}
 
+const menuStyleOnDisplayed: string = 'top-[70px] opacity-100'
+
 const Navbar = (props: Props) => {
 
-    const menu = (e: React.MouseEvent) => {
+    const [isMenuDisplayed, setIsMenuDisplayed] = useState<Boolean>(false)
 
+    const menu = (e: React.MouseEvent) => {
+        setIsMenuDisplayed(value => !value)
     }
     return (
         <nav className="p-5 bg-white shadow md:flex md:items-center md:justify-between sticky top-0 z-1 ">
@@ -25,7 +29,9 @@ const Navbar = (props: Props) => {
                 </span>
             </div>
 
-            <ul className="md:flex md:items-center z-[-1] md:z-auto md:static absolute bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500">
+            <ul className={`md:flex md:items-center z-[-1] md:z-auto md:static absolute
+             bg-white w-full left-0 md:w-auto md:py-0 py-4 md:pl-0 pl-7 md:opacity-100 opacity-0 top-[-400px] transition-all ease-in duration-500 
+             ${isMenuDisplayed ? menuStyleOnDisplayed : ''}`}>
                 <li className="mx-4 my-6 md:my-0">
                     <Link href="/home" className="text-xl hover:text-cyan-500 duration-500">HOME</Link>
                 </li>
