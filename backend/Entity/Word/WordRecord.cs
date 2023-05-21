@@ -8,5 +8,7 @@
         public DateTime CreatedTime { get; set; }
         public bool IsMemorized { get; set; }
         public int Frequency { get; set; }
+
+
     }
 }
