@@ -10,6 +10,8 @@ namespace backend.Entity.Word
             builder.ToTable("T_WordRecord");
             builder.OwnsOne(w => w.Translation);
             builder.Property(w => w.CreatedTime).HasDefaultValue(DateTime.Now);
+            builder.Property(w => w.IsMemorized).HasDefaultValue(false);
+            builder.Property(w => w.Frequency).HasDefaultValue(1);
         }
     }
 }

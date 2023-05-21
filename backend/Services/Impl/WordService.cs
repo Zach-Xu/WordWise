@@ -1,4 +1,5 @@
 ﻿using backend.Entity.Word;
+using backend.Models;
 using backend.Repository;
 
 namespace backend.Services
@@ -6,15 +7,24 @@ namespace backend.Services
     public class WordService : IWordService
     {
         private readonly WordRepository wordRepo;
+        private readonly ITranslateService translateService;
 
-        public WordService(WordRepository wordRepo)
+        public WordService(WordRepository wordRepo, ITranslateService translateService)
         {
             this.wordRepo = wordRepo;
+            this.translateService = translateService;
         }
 
-        public Task<WordRecord> CreateWordRecordAsync(WordRecord wordRecord)
+        public async Task<WordRecord> CreateWordRecordAsync(WordDto wordDto)
         {
-            return wordRepo.CreateWordRecordAsnyc(wordRecord);
+            var translation = await translateService.TranslateWordAsync(wordDto.Word, wordDto.Language);
+            WordRecord wordRecord = new WordRecord
+            {
+                EnglishWord = wordDto.Word,
+                Translation = translation           
+            };
+
+            return await wordRepo.CreateWordRecordAsnyc(wordRecord);
         }
 
         public Task<WordRecord[]> GetWordRecordsAsync(int pageNum, int pageSize)
