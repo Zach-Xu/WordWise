@@ -2,6 +2,7 @@
 
 import { ResponseResult } from "@/types/response/ResponseResult";
 import { WordRecord } from "@/types/response/WordRecord";
+import customAxios from "@/utils/axiosConfig";
 import { generateDate, months } from "@/utils/calendar";
 import cn from "@/utils/cn";
 import axios from "axios";
@@ -27,7 +28,7 @@ const Page = (props: Props) => {
         const fetchWordsByDate = async () => {
             try {
                 const date = moment(selectDate.toDate().toLocaleDateString()).format('YYYY-MM-DD')
-                const { data } = await axios.get<ResponseResult<WordRecord[]>>(`/api/words?date=${date}`)
+                const { data } = await customAxios.get<ResponseResult<WordRecord[]>>(`/api/words?date=${date}`)
                 if (data.status === 200) {
                     setWordRecords(data.data)
                 }

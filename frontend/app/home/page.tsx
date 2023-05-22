@@ -2,6 +2,7 @@
 
 import { ResponseResult } from '@/types/response/ResponseResult';
 import { WordRecord } from '@/types/response/WordRecord';
+import customAxios from '@/utils/axiosConfig';
 import axios from 'axios';
 import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
@@ -63,7 +64,7 @@ const Page = (props: Props) => {
     const translateWord = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            const { data } = await axios.post<ResponseResult<WordRecord>>('/api/words', {
+            const { data } = await customAxios.post<ResponseResult<WordRecord>>('/api/words', {
                 word,
                 language: languageCode
             })
