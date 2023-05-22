@@ -13,7 +13,6 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 import { toast } from "react-toastify";
 
 type Props = {
-    date: string
 }
 
 const Page = (props: Props) => {
