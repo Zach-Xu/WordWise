@@ -8,6 +8,12 @@ const nextConfig = (phase) => {
                 API_BASE_URL: 'http://localhost:5263'
             }
         }
+    } else {
+        return {
+            env: {
+                API_BASE_URL: 'https://word-wise.azurewebsites.net'
+            }
+        }
     }
 }
 
