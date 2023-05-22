@@ -27,6 +27,17 @@ namespace backend.Repository
             return wordRecords;
         }
 
+        public async void UpdateEntities()
+        {
+            await dbContext.SaveChangesAsync();
+        }
+
+        public async Task<WordRecord?> GetWordRecordByWordAndLanguage(string word, Language language)
+        {
+            var wordRecord = await dbContext.WordRecords.Where( w => w.EnglishWord.ToLower() == word.ToLower() && w.Translation.Language == language).FirstOrDefaultAsync();
+            return wordRecord;
+        }
+
         public async Task<WordRecord[]> GetWordRecordsByDateAndLanguageAsync(DateTime date, Language language = Language.Chinese)
         {
             var wordRecords = await dbContext.WordRecords.Where(w => w.CreatedTime.Date == date.Date && w.Translation.Language == language)

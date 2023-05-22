@@ -2,8 +2,18 @@
 
 import Login from "@/components/Login";
 import Signup from "@/components/Signup";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Home() {
+
+  const router = useRouter()
+
+  useEffect(() => {
+    // redirect to home page
+    // skip authentication for now
+    router.push('/home')
+  }, [])
 
   return (
     <div className='flex flex-col space-y-4 lg:flex-row min-h-screen w-screen items-center justify-center bg-[#f0f2f5]'>

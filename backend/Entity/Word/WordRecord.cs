@@ -9,6 +9,9 @@
         public bool IsMemorized { get; set; }
         public int Frequency { get; set; }
 
-
+        public WordRecord()
+        {
+            CreatedTime = DateTime.Now;
+        }
     }
 }

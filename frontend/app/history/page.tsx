@@ -1,25 +1,49 @@
 'use client';
 
+import { ResponseResult } from "@/types/response/ResponseResult";
+import { WordRecord } from "@/types/response/WordRecord";
 import { generateDate, months } from "@/utils/calendar";
 import cn from "@/utils/cn";
+import axios from "axios";
 import dayjs from "dayjs";
-import React, { useState } from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
+import { toast } from "react-toastify";
 
 type Props = {
     date: string
 }
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
 
     const days = ["S", "M", "T", "W", "T", "F", "S"];
     const currentDate = dayjs();
     const [today, setToday] = useState(currentDate);
     const [selectDate, setSelectDate] = useState(currentDate);
+    const [wordRecords, setWordRecords] = useState<WordRecord[]>()
+
+    useEffect(() => {
+        const fetchWordsByDate = async () => {
+            try {
+                const date = moment(selectDate.toDate().toLocaleDateString()).format('YYYY-MM-DD')
+                const { data } = await axios.get<ResponseResult<WordRecord[]>>(`/api/words?date=${date}`)
+                if (data.status === 200) {
+                    setWordRecords(data.data)
+                }
+
+            } catch (error) {
+                if (axios.isAxiosError(error)) {
+                    toast.error(error.message)
+                }
+            }
+        }
+        fetchWordsByDate()
+    }, [selectDate])
 
     return (
-        <div className="flex gap-10 sm:divide-x justify-center sm:w-1/2 mx-auto h-full items-center sm:flex-row flex-col">
-            <div className="w-96 h-96 ">
+        <div className="flex gap-10 justify-center mx-auto h-full items-center sm:flex-row flex-col px-4">
+            <div className="w-96 h-96 mt-5 md:mt-0">
                 <div className="flex justify-between items-center">
                     <h1 className="select-none font-semibold">
                         {months[today.month()]}, {today.year()}
@@ -59,7 +83,6 @@ const page = (props: Props) => {
                         );
                     })}
                 </div>
-
                 <div className=" grid grid-cols-7 ">
                     {generateDate(today.month(), today.year()).map(
                         ({ date, currentMonth, today }, index) => {
@@ -94,14 +117,25 @@ const page = (props: Props) => {
                     )}
                 </div>
             </div>
-            <div className="h-96 w-96 sm:px-5">
+            <div className="h-96 w-96 ">
                 <h1 className="font-semibold">
                     Words transalted on {selectDate.toDate().toDateString()}
                 </h1>
+                <div className="mt-2 bg-white pl-2">
+                    {
+                        wordRecords && wordRecords.map(word =>
+                        (
+                            <div key={word.id} className="flex text-black space-x-2">
+                                <div>{word.englishWord}</div>
+                                <div>{word.translation.definition}</div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
         </div>
     );
 }
 
 
-export default page
+export default Page

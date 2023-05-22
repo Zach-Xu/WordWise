@@ -3,7 +3,7 @@
 import { ResponseResult } from '@/types/response/ResponseResult';
 import { WordRecord } from '@/types/response/WordRecord';
 import axios from 'axios';
-import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react'
 import { toast } from 'react-toastify';
 
 type Props = {}
@@ -40,11 +40,12 @@ const languageNames: string[] = [
     "Chinese",
 ];
 
-const page = (props: Props) => {
+const Page = (props: Props) => {
 
     const [word, setWord] = useState<string>('')
     const [languageCode, setLanguageCode] = useState<number>()
     const [wordRecord, setWordRecord] = useState<WordRecord>()
+    const wordInputRef = useRef<HTMLInputElement>(null)
 
     useEffect(() => {
         let language = localStorage.getItem('language_preference')
@@ -53,13 +54,16 @@ const page = (props: Props) => {
         } else {
             setLanguageCode(-1)
         }
+        if (wordInputRef.current) {
+            wordInputRef.current.focus()
+        }
     }, [])
 
 
     const translateWord = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         try {
-            const { data } = await axios.post<ResponseResult<WordRecord>>('/wordrecord', {
+            const { data } = await axios.post<ResponseResult<WordRecord>>('/api/words', {
                 word,
                 language: languageCode
             })
@@ -82,7 +86,7 @@ const page = (props: Props) => {
     return (
         <div className='h-full flex flex-col justify-center'>
             <form className='flex flex-col max-w-[700px] mx-auto border-2 bg-white shadow-lg rounded-lg p-4 space-y-4' onSubmit={translateWord}>
-                <input type="text" required className='active:outline-none focus:outline-none p-1' value={word} onChange={e => setWord(e.target.value)} placeholder='English Word' />
+                <input type="text" required ref={wordInputRef} className='active:outline-none focus:outline-none p-1' value={word} onChange={e => setWord(e.target.value)} placeholder='English Word' />
                 <select required value={languageCode} className='py-2 focus:outline-none' onChange={changeLanguage}>
                     <option value={-1} disabled hidden >Targeted language</option>
                     {
@@ -102,4 +106,4 @@ const page = (props: Props) => {
     )
 }
 
-export default page
+export default Page
