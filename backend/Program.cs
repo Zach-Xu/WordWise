@@ -45,6 +45,19 @@ builder.Services.AddDbContext<WordDbContext>(
             }
         );
 
+// Allow CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Policy1", builder =>
+    {
+        builder.SetIsOriginAllowed(origin => true)
+        .WithMethods("POST", "GET", "PUT", "DELETE", "PATCH")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -53,6 +66,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("Policy1");
 
 app.UseHttpsRedirection();
 

@@ -1,4 +1,10 @@
-import React from 'react'
+'use client'
+
+import { ResponseResult } from '@/types/response/ResponseResult';
+import { WordRecord } from '@/types/response/WordRecord';
+import axios from 'axios';
+import React, { ChangeEvent, FormEvent, useEffect, useState } from 'react'
+import { toast } from 'react-toastify';
 
 type Props = {}
 
@@ -36,29 +42,62 @@ const languageNames: string[] = [
 
 const page = (props: Props) => {
 
-    const translateWord = async () => {
+    const [word, setWord] = useState<string>('')
+    const [languageCode, setLanguageCode] = useState<number>()
+    const [wordRecord, setWordRecord] = useState<WordRecord>()
+
+    useEffect(() => {
+        let language = localStorage.getItem('language_preference')
+        if (language && !isNaN(Number(language))) {
+            setLanguageCode(Number(language))
+        } else {
+            setLanguageCode(-1)
+        }
+    }, [])
+
+
+    const translateWord = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         try {
+            const { data } = await axios.post<ResponseResult<WordRecord>>('/wordrecord', {
+                word,
+                language: languageCode
+            })
+            if (data.status === 200) {
+                setWordRecord(data.data)
+            }
 
         } catch (error) {
-
+            if (axios.isAxiosError(error)) {
+                toast.error(error.message)
+            }
         }
+    }
+
+    const changeLanguage = (e: ChangeEvent<HTMLSelectElement>) => {
+        setLanguageCode(Number(e.target.value))
+        localStorage.setItem('language_preference', e.target.value)
     }
 
     return (
         <div className='h-full flex flex-col justify-center'>
-            <div className='flex flex-col max-w-[700px] mx-auto border-2 bg-white shadow-lg rounded-lg p-4 space-y-4'>
-                <input type="text" className='active:outline-none focus:outline-none p-1' placeholder='English Word' />
-                <select name="" defaultValue="" className='py-2 focus:outline-none'>
-                    <option value="" disabled hidden>Targeted language</option>
+            <form className='flex flex-col max-w-[700px] mx-auto border-2 bg-white shadow-lg rounded-lg p-4 space-y-4' onSubmit={translateWord}>
+                <input type="text" required className='active:outline-none focus:outline-none p-1' value={word} onChange={e => setWord(e.target.value)} placeholder='English Word' />
+                <select required value={languageCode} className='py-2 focus:outline-none' onChange={changeLanguage}>
+                    <option value={-1} disabled hidden >Targeted language</option>
                     {
                         languageNames.map((name, idx) => (
-                            <option key={idx} value={name}>{name}</option>
+                            <option key={idx} value={idx}>{name}</option>
                         ))
                     }
                 </select>
-                <button className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500' onClick={translateWord}>Translate</button>
-                <p className='bg-gray-200 p-2 rounded-md'>Translation</p>
-            </div>
+                <input type='submit' className='bg-blue-400 text-white p-1 rounded-md px-2 hover:bg-blue-500 cursor-pointer' value='Translate' />
+                <p className='bg-gray-200 p-2 rounded-md'>
+                    {
+                        word && wordRecord ? wordRecord.translation.definition : 'Translation'
+                    }
+                </p>
+            </form>
         </div>
     )
 }

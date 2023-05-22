@@ -1,4 +1,4 @@
-import { LoginDTO } from '@/types/dto/authDTO'
+import { LoginDTO } from '@/types/dto/AuthDto'
 import { useRouter } from 'next/navigation'
 
 import React, { useState } from 'react'

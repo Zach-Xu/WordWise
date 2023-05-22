@@ -1,4 +1,4 @@
-import { SignupDTO } from '@/types/dto/authDTO'
+import { SignupDTO } from '@/types/dto/AuthDto'
 import React, { useState } from 'react'
 
 

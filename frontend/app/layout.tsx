@@ -6,9 +6,11 @@ import { Inter } from 'next/font/google'
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Navbar from '@/components/Navbar'
+import axios from 'axios';
+
+axios.defaults.baseURL = process.env.API_BASE_URL
 
 const inter = Inter({ subsets: ['latin'] })
-
 export const metadata = {
   title: 'Word Wise',
   description: 'Learn English words here',
@@ -17,6 +19,7 @@ export const metadata = {
 export default function RootLayout({ children, }: {
   children: React.ReactNode
 }) {
+
 
   const pathname = usePathname()
 

@@ -22,7 +22,7 @@ namespace backend.Controllers
         public async Task<ResponseResult<WordRecord>> CreateWordRecord(WordDto wordDto)
         {
             WordRecord wordRecord = await wordService.CreateWordRecordAsync(wordDto);
-            return new ResponseResult<WordRecord>(Ok().StatusCode, wordRecord, "Create word record successfully!");
+            return new ResponseResult<WordRecord>(StatusCodes.Status200OK, wordRecord, "Create word record successfully!");
         }
 
     }
